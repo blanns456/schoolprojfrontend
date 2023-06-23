@@ -1,0 +1,107 @@
+<h2 class="text-center">My Form</h2>
+<div class="row justify-content-start align-items-start g-2">
+  <div class="col-6">
+    <form (ngSubmit)="onSubmit()" [formGroup]="myForm" class="p-3" method="post">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name:</label>
+        <input type="name" class="form-control" id="name" formControlName="name">
+          <div *ngIf="myForm.controls['name'].invalid && (myForm.controls['name'].dirty || myForm.controls['name'].touched)">
+            <div *ngIf="myForm.controls['name'].errors?.['required']">Name is required.</div>
+            <div *ngIf="myForm.controls['name'].errors?.['name']">Name must be a valid Name address.</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" class="form-control" id="email" formControlName="email">
+        <div *ngIf="myForm.controls['email'].invalid && (myForm.controls['email'].dirty || myForm.controls['email'].touched)">
+          <div *ngIf="myForm.controls['email'].errors?.['required']">Email is required.</div>
+          <div *ngIf="myForm.controls['email'].errors?.['email']">Email must be a valid email address.</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password:</label>
+        <input type="password" class="form-control" id="password" formControlName="password">
+        <div *ngIf="myForm.controls['password'].invalid && (myForm.controls['password'].dirty || myForm.controls['password'].touched)">
+          <div *ngIf="myForm.controls['password'].errors?.['required']">password is required.</div>
+          <div *ngIf="myForm.controls['password'].errors?.['minlength']">password must be at least 3 characters long.</div>
+        </div>
+      </div>
+      <button type="submit" [disabled]="myForm.invalid" class="btn btn-info">Register</button>
+    </form>
+  </div>
+  <div class="col-6">
+    <div class="table-responsive">
+      <table class="table table-primary">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th colspan="2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{user.id}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.name}}</td>
+            <td><button class="btn btn-danger" (click)="onRemove(user.id)">Delete</button></td>
+            <td><button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalId" (click)="onShowInfo(user.id)">Edit</button></td>
+            <!-- <td></td> -->
+
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<!-- Modal Body -->
+<!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+<div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitleId">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form (ngSubmit)="onUpdate()" [formGroup]="myUpdateForm" class="p-3" method="post">
+        <input type="hidden" id="user_id" formControlName="user_id">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name:</label>
+        <input type="name" class="form-control" id="update_name" formControlName="update_name">
+          <!-- <div *ngIf="myUpdateForm.controls['update_name'].invalid && (myUpdateForm.controls['update_name'].dirty || myUpdateForm.controls['update_name'].touched)">
+            <div *ngIf="myUpdateForm.controls['update_name'].errors?.['required']">update_name is required.</div>
+
+        </div> -->
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" class="form-control" id="update_email" formControlName="update_email">
+        <!-- <div *ngIf="myUpdateForm.controls['update_email'].invalid && (myUpdateForm.controls['update_email'].dirty || myUpdateForm.controls['update_email'].touched)">
+          <div *ngIf="myUpdateForm.controls['update_email'].errors?.['required']">Email is required.</div>
+          <div *ngIf="myUpdateForm.controls['update_email'].errors?.['email']">Email must be a valid email address.</div>
+        </div> -->
+      </div>
+
+      <button type="submit"  class="btn btn-info">Update</button>
+    </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
